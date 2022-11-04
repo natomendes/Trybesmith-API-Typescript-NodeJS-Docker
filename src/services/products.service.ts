@@ -4,8 +4,8 @@ import productsMapperObj from '../dataMappers/products.mapper';
 class ProductService {
   private productsMapper;
 
-  constructor(productsModel = productsMapperObj) {
-    this.productsMapper = productsModel;
+  constructor(productsMapper = productsMapperObj) {
+    this.productsMapper = productsMapper;
   }
 
   async getAll(): Promise<IServiceResp<IProduct[]>> {
