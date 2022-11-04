@@ -2,7 +2,7 @@ import { Pool, ResultSetHeader } from 'mysql2/promise';
 import { IProduct } from '../interfaces';
 import connectionObj from './connection';
 
-export default class ProductsModel {
+class ProductsModel {
   public connection: Pool;
 
   constructor(connection = connectionObj) {
@@ -17,4 +17,14 @@ export default class ProductsModel {
     );
     return { id: insertId, ...product };
   }
+
+  async findAll(): Promise<IProduct[]> {
+    const [result] = await this.connection.execute(
+      'SELECT * FROM Trybesmith.Products',
+    );
+
+    return result as IProduct[];
+  }
 }
+
+export default new ProductsModel();

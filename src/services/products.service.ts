@@ -1,12 +1,18 @@
 import { IServiceResp } from '../interfaces';
 import { IProduct } from '../interfaces/product.interface';
-import ProductsMapper from '../dataMappers/products.mapper';
+import productsMapperObj from '../dataMappers/products.mapper';
 
-export default class ProductService {
-  productsMapper;
+class ProductService {
+  private productsMapper;
 
-  constructor(productsModel = new ProductsMapper()) {
+  constructor(productsModel = productsMapperObj) {
     this.productsMapper = productsModel;
+  }
+
+  async getAll(): Promise<IServiceResp<IProduct[]>> {
+    const products = await this.productsMapper.getAll();
+
+    return { statusCode: 200, data: products };
   }
 
   async createNew({ name, amount }: IProduct): Promise<IServiceResp<IProduct>> {
@@ -15,3 +21,5 @@ export default class ProductService {
     return { statusCode: 201, data: productCreated };
   }
 }
+
+export default new ProductService();

@@ -1,11 +1,17 @@
 import { IProduct } from '../interfaces';
-import ProductsModel from '../models/products.model';
+import productsModelObj from '../models/products.model';
 
-export default class ProductsMapper {
-  productsModel;
+class ProductsMapper {
+  private productsModel;
 
-  constructor(productsModel = new ProductsModel()) {
+  constructor(productsModel = productsModelObj) {
     this.productsModel = productsModel;
+  }
+
+  async getAll(): Promise<IProduct[]> {
+    const products = await this.productsModel.findAll();
+
+    return products;
   }
 
   async create({ name, amount }: IProduct): Promise<IProduct> {
@@ -14,3 +20,5 @@ export default class ProductsMapper {
     return product;
   }
 }
+
+export default new ProductsMapper();
