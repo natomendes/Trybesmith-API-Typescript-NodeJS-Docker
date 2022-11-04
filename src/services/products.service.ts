@@ -1,5 +1,4 @@
-import { IServiceResp } from '../interfaces';
-import { IProduct } from '../interfaces/product.interface';
+import { IServiceResp, IProduct } from '../interfaces';
 import productsMapperObj from '../dataMappers/products.mapper';
 
 class ProductService {

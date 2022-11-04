@@ -1,8 +1,8 @@
 interface MessageObject {
-  message: string
+  [key: string]: string
 }
 
-export interface IServiceResp<T> {
+export interface IServiceResp<Type> {
   statusCode: number
-  data: MessageObject | T[] | T
+  data: MessageObject | Type[] | Type
 }
