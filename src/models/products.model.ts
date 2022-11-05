@@ -25,6 +25,36 @@ class ProductsModel {
 
     return result as IProduct[];
   }
+
+  async findAllByIds(idsArray: number[]): Promise<IProduct[]> {
+    let placeHolders = '?';
+    for (let i = 1; i < idsArray.length; i += 1) {
+      placeHolders += ', ?';
+    }
+    const [result] = await this.connection.execute(
+      `
+      SELECT * FROM Trybesmith.Products
+      WHERE id IN (${placeHolders}) 
+      `,
+      idsArray,
+    );
+    return result as IProduct[];
+  }
+
+  async updateOrderIds(productsIds: number[], orderId: number): Promise<void> {
+    let placeHolders = '?';
+    for (let i = 1; i < productsIds.length; i += 1) {
+      placeHolders += ', ?';
+    }
+    await this.connection.execute<ResultSetHeader>(
+      `
+      UPDATE Trybesmith.Products
+      SET orderId = ?
+      WHERE id IN (${placeHolders})
+      `,
+      [orderId, ...productsIds],
+    );
+  }
 }
 
 export default new ProductsModel();

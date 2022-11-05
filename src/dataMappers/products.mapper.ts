@@ -14,10 +14,21 @@ class ProductsMapper {
     return products;
   }
 
+  async getAllByIds(idsArray: number[]): Promise<IProduct[]> {
+    const products = await this.productsModel.findAllByIds(idsArray);
+
+    return products;
+  }
+
   async create({ name, amount }: IProduct): Promise<IProduct> {
     const product = await this.productsModel.insert({ name, amount });
 
     return product;
+  }
+
+  async updateOrderIds(productsIds: number[], orderId: number): Promise<void> {
+    await this.productsModel
+      .updateOrderIds(productsIds, orderId);
   }
 }
 
