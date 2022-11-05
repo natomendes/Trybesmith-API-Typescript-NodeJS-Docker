@@ -1,6 +1,7 @@
 import { IServiceResp, IUser } from '../interfaces';
 import usersMapperObj from '../dataMappers/users.mapper';
 import JwtServiceObj from './jwt.service';
+import HttpException from '../shared/http.exception';
 
 class LoginService {
   private usersMapper;
@@ -20,7 +21,7 @@ class LoginService {
   async authenticateUser({ username, password }: IUser): Promise<IServiceResp<IUser>> {
     const user = await this.getUserByName(username);
     if (!user || user.password !== password) {
-      return { statusCode: 401, data: { message: 'Username or password invalid' } };
+      throw new HttpException(401, 'Username or password invalid');
     }
     const token = this.jwtService.generateToken(user);
 
