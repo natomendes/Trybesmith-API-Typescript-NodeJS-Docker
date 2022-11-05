@@ -13,6 +13,11 @@ class UsersMapper {
 
     return product;
   }
+
+  async getByUserName(username: string): Promise<IUser | undefined> {
+    const user = await this.usersModel.getByUsername(username);
+    return user;
+  }
 }
 
 export default new UsersMapper();

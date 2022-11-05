@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { IUser, IServiceResp } from '../interfaces';
+import { IUser } from '../interfaces';
 import usersServiceObj from '../services/users.service';
 
 class UsersController {
@@ -11,7 +11,7 @@ class UsersController {
 
   createNew = async (req: Request, res: Response): Promise<void> => {
     const user: IUser = req.body;
-    const { statusCode, data }: IServiceResp<IUser> = await this
+    const { statusCode, data } = await this
       .usersService
       .createNew(user);
 
